@@ -1,0 +1,83 @@
+type User 
+  @model 
+  @auth(rules: [{ allow: owner, ownerField: "email", queries: null }]) {
+  id: ID!
+  username: String!
+  email: String!
+  description: String
+  dateOfBirth: AWSDate!
+  interestedCuisines: [String]
+  recipies: [RecipieLink] @connection(name: "UserLinks")
+  comments: [Comment] @connection(name: "UserComments")
+	createdAt: String
+	updatedAt: String
+}
+
+type Recipie
+  @model(
+    mutations: { create: "createRecipie" }
+    queries: { get: "getRecipie" }
+    subscriptions: null
+  )
+  @auth(rules: [{ allow: owner, ownerField: "user" }]) {
+  id: ID!
+  name: String!
+  category: String!
+  regionOriented: String!
+  mainIngredients: [String!]!
+  possibleAllergens: [String!]!
+  description: String!
+  mediaUrl: String!
+  likes: Int
+  dislikes: Int
+  comments: [Comment] @connection(name: "RecipieComments", sortField: "createdAt")
+  associated: [RecipieLink] @connection(name: "AssociatedLinks")
+  isPrivate: Boolean!
+	createdAt: String
+	updatedAt: String
+}
+
+type Comment
+  @model(subscriptions: null, queries: null)  
+  @auth(rules: [
+    { allow: owner, ownerField: "authorId", operations: [create, update, delete]},
+    { allow: private, operations: [read] }
+    ]) {
+    id: ID!
+    comment: String
+    createdBy: String
+    recipie: Recipie! @connection(name: "RecipieComments")
+    author: User @connection(name: "UserComments", keyField: "authorId")
+    authorId: String
+    commentRecipieID: ID!
+    createdAt: String
+	  updatedAt: String
+  }
+
+type RecipieLink 
+  @model(
+    mutations: { create: "createRecipieLink", update: "updateRecipieLink" }
+    queries: null
+    subscriptions: null
+  ) {
+  id: ID!
+  user: User! @connection(name: "UserLinks")
+  recipieLinkUserId: ID
+  recipie: Recipie! @connection(name: "AssociatedLinks")
+  recipieLinkRecipieId: ID!
+	createdAt: String
+	updatedAt: String
+}
+
+type S3Payload 
+{
+  signedRequest: String!,
+  url: String!,
+}
+
+type Subscription {
+  onCreateRecipieLink(recipieLinkUserId: ID!): RecipieLink
+    @aws_subscribe(mutations: ["createRecipieLink"])
+  onCreateComment(commentRecipieID: ID!): Comment
+    @aws_subscribe(mutations: ["createComment"])
+}
