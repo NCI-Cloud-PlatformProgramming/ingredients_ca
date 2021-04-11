@@ -14,6 +14,13 @@
     "categories": {
       "auth": {
         "ingredient7e664d71": {}
+      },
+      "function": {
+        "ingredient250056e9250056e9DefineAuthChallenge": {},
+        "ingredient250056e9250056e9CreateAuthChallenge": {},
+        "ingredient250056e9250056e9VerifyAuthChallengeResponse": {
+          "RECAPTCHASECRET": "6Ld75KQaAAAAAMTEJALrg1CvLIpQwnYq_Ok_z_Gj"
+        }
       }
     }
   }
