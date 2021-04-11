@@ -16,7 +16,7 @@ type User
 type Recipie
   @model(
     mutations: { create: "createRecipie" }
-    queries: { get: "getRecipie" }
+    queries: {get: "getRecipie", list: "listRecipies"}
     subscriptions: null
   )
   @auth(rules: [{ allow: owner, ownerField: "user" }]) {
@@ -38,7 +38,7 @@ type Recipie
 }
 
 type Comment
-  @model(subscriptions: null, queries: null)  
+  @model(subscriptions: null, queries: {get: "getComment", list: "listComments"})  
   @auth(rules: [
     { allow: owner, ownerField: "authorId", operations: [create, update, delete]},
     { allow: private, operations: [read] }
