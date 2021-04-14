@@ -14,6 +14,7 @@ export const onCreateRecipieLink = /* GraphQL */ `
         interestedCuisines
         createdAt
         updatedAt
+        owner
       }
       recipieLinkUserId
       recipie {
@@ -69,6 +70,7 @@ export const onCreateComment = /* GraphQL */ `
         interestedCuisines
         createdAt
         updatedAt
+        owner
       }
       authorId
       commentRecipieID
@@ -94,6 +96,7 @@ export const onCreateUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -114,6 +117,7 @@ export const onUpdateUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -134,6 +138,7 @@ export const onDeleteUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;

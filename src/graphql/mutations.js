@@ -21,6 +21,7 @@ export const createUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -44,6 +45,7 @@ export const updateUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -67,6 +69,7 @@ export const deleteUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -133,6 +136,7 @@ export const createComment = /* GraphQL */ `
         interestedCuisines
         createdAt
         updatedAt
+        owner
       }
       authorId
       commentRecipieID
@@ -175,6 +179,7 @@ export const updateComment = /* GraphQL */ `
         interestedCuisines
         createdAt
         updatedAt
+        owner
       }
       authorId
       commentRecipieID
@@ -217,6 +222,7 @@ export const deleteComment = /* GraphQL */ `
         interestedCuisines
         createdAt
         updatedAt
+        owner
       }
       authorId
       commentRecipieID
@@ -241,6 +247,7 @@ export const createRecipieLink = /* GraphQL */ `
         interestedCuisines
         createdAt
         updatedAt
+        owner
       }
       recipieLinkUserId
       recipie {
@@ -281,6 +288,7 @@ export const updateRecipieLink = /* GraphQL */ `
         interestedCuisines
         createdAt
         updatedAt
+        owner
       }
       recipieLinkUserId
       recipie {

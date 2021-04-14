@@ -18,6 +18,7 @@ export const getUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -37,6 +38,7 @@ export const listUsers = /* GraphQL */ `
         interestedCuisines
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
@@ -126,6 +128,7 @@ export const getComment = /* GraphQL */ `
         interestedCuisines
         createdAt
         updatedAt
+        owner
       }
       authorId
       commentRecipieID

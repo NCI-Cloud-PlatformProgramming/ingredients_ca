@@ -1,11 +1,11 @@
 type User 
   @model 
-  @auth(rules: [{ allow: owner, ownerField: "email", queries: null }]) {
+  @auth(rules: [{ allow: owner, queries: null }]) {
   id: ID!
   username: String!
   email: String!
   description: String
-  dateOfBirth: AWSDate!
+  dateOfBirth: AWSDate
   interestedCuisines: [String]
   recipies: [RecipieLink] @connection(name: "UserLinks")
   comments: [Comment] @connection(name: "UserComments")
