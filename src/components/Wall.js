@@ -9,13 +9,13 @@ class Wall extends React.Component {
     return (
       <div >
         <div {...css(styles.wall)}>
-          This page will list all recepie videos
+          This page will list all recipe videos
         </div>
         <Link
           to='/wall/addNewRecipie'
           {...css(styles.addButton)}
         >
-          <img alt="Add New Recepie" src={require('../assets/addButton.ico').default} />
+          <img alt="Add New Recipe" src={require('../assets/addButton.ico').default} />
         </Link>
       </div>
 

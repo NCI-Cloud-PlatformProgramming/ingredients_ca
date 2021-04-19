@@ -7,12 +7,12 @@ import { observer } from 'mobx-react'
 import UserStore from '../mobx/UserStore'
 import { primary } from '../theme'
 
-const AddNewRecepie = observer(class AddNewRecepie extends React.Component {
+const AddNewRecipe = observer(class AddNewRecipe extends React.Component {
   render() {
     const { username, email } = UserStore
     return (
       <div {...css(styles.container)}>
-        <p {...css(styles.title)}>Profile</p>
+        <p {...css(styles.title)}>Add New Recipe</p>
         <p>Username: <b>{username}</b></p>
         <p>Email: <b>{email}</b></p>
       </div>
@@ -45,4 +45,4 @@ const styles = {
   }
 }
 
-export default AddNewRecepie
+export default AddNewRecipe
