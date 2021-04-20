@@ -22,9 +22,8 @@ type Recipie
   @auth(rules: [{ allow: owner, ownerField: "user" }]) {
   id: ID!
   name: String!
-  category: String!
-  regionOriented: String!
-  mainIngredients: [String!]!
+  cuisine: String!
+  ingredients: [String!]!
   possibleAllergens: [String!]!
   description: String!
   mediaUrl: String!

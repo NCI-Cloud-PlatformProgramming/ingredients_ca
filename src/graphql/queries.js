@@ -49,9 +49,8 @@ export const getRecipie = /* GraphQL */ `
     getRecipie(id: $id) {
       id
       name
-      category
-      regionOriented
-      mainIngredients
+      cuisine
+      ingredients
       possibleAllergens
       description
       mediaUrl
@@ -80,9 +79,8 @@ export const listRecipies = /* GraphQL */ `
       items {
         id
         name
-        category
-        regionOriented
-        mainIngredients
+        cuisine
+        ingredients
         possibleAllergens
         description
         mediaUrl
@@ -106,9 +104,8 @@ export const getComment = /* GraphQL */ `
       recipie {
         id
         name
-        category
-        regionOriented
-        mainIngredients
+        cuisine
+        ingredients
         possibleAllergens
         description
         mediaUrl

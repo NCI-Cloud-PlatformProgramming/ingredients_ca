@@ -20,9 +20,8 @@ export const onCreateRecipieLink = /* GraphQL */ `
       recipie {
         id
         name
-        category
-        regionOriented
-        mainIngredients
+        cuisine
+        ingredients
         possibleAllergens
         description
         mediaUrl
@@ -48,9 +47,8 @@ export const onCreateComment = /* GraphQL */ `
       recipie {
         id
         name
-        category
-        regionOriented
-        mainIngredients
+        cuisine
+        ingredients
         possibleAllergens
         description
         mediaUrl

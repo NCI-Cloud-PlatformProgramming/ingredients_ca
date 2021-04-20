@@ -1,5 +1,5 @@
 import { API, graphqlOperation, Auth } from 'aws-amplify'
-import { getUserByEmail as GetUserByEmail, getUser as GetUser, createUser } from '../graphql'
+import { getUserByEmail as GetUserByEmail, getUser as createUser } from '../graphql'
 
 import { observable, decorate } from 'mobx'
 

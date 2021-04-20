@@ -81,9 +81,8 @@ export const createRecipie = /* GraphQL */ `
     createRecipie(input: $input, condition: $condition) {
       id
       name
-      category
-      regionOriented
-      mainIngredients
+      cuisine
+      ingredients
       possibleAllergens
       description
       mediaUrl
@@ -114,9 +113,8 @@ export const createComment = /* GraphQL */ `
       recipie {
         id
         name
-        category
-        regionOriented
-        mainIngredients
+        cuisine
+        ingredients
         possibleAllergens
         description
         mediaUrl
@@ -157,9 +155,8 @@ export const updateComment = /* GraphQL */ `
       recipie {
         id
         name
-        category
-        regionOriented
-        mainIngredients
+        cuisine
+        ingredients
         possibleAllergens
         description
         mediaUrl
@@ -200,9 +197,8 @@ export const deleteComment = /* GraphQL */ `
       recipie {
         id
         name
-        category
-        regionOriented
-        mainIngredients
+        cuisine
+        ingredients
         possibleAllergens
         description
         mediaUrl
@@ -253,9 +249,8 @@ export const createRecipieLink = /* GraphQL */ `
       recipie {
         id
         name
-        category
-        regionOriented
-        mainIngredients
+        cuisine
+        ingredients
         possibleAllergens
         description
         mediaUrl
@@ -294,9 +289,8 @@ export const updateRecipieLink = /* GraphQL */ `
       recipie {
         id
         name
-        category
-        regionOriented
-        mainIngredients
+        cuisine
+        ingredients
         possibleAllergens
         description
         mediaUrl
