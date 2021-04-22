@@ -3,13 +3,23 @@ import React from 'react'
 import { css } from 'glamor'
 import { Link, withRouter } from 'react-router-dom'
 import { primary } from '../theme'
+import awsvideoconfig from '../aws-video-exports'
+import VideoCards from '../components/VideoCards';
+
+const videoJsOptions = {
+  autoplay: true,
+  controls: true,
+  sources: [{
+    src: `https://${awsvideoconfig.awsOutputVideo}/public/userRecipes/sample_Recipe/sample_Recipe.m3u8`
+  }]
+}
 
 class Wall extends React.Component {
   render() {
     return (
       <div >
         <div {...css(styles.wall)}>
-          This page will list all recipe videos
+          <VideoCards {...videoJsOptions}/>
         </div>
         <Link
           to='/wall/addNewRecipie'

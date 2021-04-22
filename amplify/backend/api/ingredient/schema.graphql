@@ -30,7 +30,7 @@ type Recipie
   dislikes: Int
   comments: [Comment] @connection(name: "RecipieComments", sortField: "createdAt")
   associated: [RecipieLink] @connection(name: "AssociatedLinks")
-  isPrivate: Boolean!
+  # isPrivate: Boolean!
 	createdAt: String
 	updatedAt: String
 }
@@ -72,4 +72,33 @@ type Subscription {
     @aws_subscribe(mutations: ["createRecipieLink"])
   onCreateComment(commentRecipieID: ID!): Comment
     @aws_subscribe(mutations: ["createComment"])
+}
+
+
+type vodAsset @model (subscriptions: {level: public})
+@auth(
+  rules: [
+    {allow: owner, operations: [create, update, delete, read]},
+    {allow: private, operations: [read]}
+  ]
+)
+{
+  id:ID!
+  title:String!
+  description:String!
+
+  #DO NOT EDIT
+  video:videoObject @connection
+} 
+
+#DO NOT EDIT
+type videoObject @model
+@auth(
+  rules: [
+    {allow: owner, operations: [create, update, delete, read]},
+    {allow: private, operations: [read]}
+  ]
+)
+{
+  id:ID!
 }

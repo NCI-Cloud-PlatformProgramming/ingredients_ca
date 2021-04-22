@@ -16,10 +16,23 @@
         "ingredient7e664d71": {}
       },
       "function": {
-        "ingredient250056e9250056e9DefineAuthChallenge": {},
-        "ingredient250056e9250056e9CreateAuthChallenge": {},
+        "ingredient250056e9250056e9DefineAuthChallenge": {
+          "deploymentBucketName": "amplify-ingredient-dev-170401-deployment",
+          "s3Key": "amplify-builds/ingredient250056e9250056e9DefineAuthChallenge-7930457473384a706841-build.zip"
+        },
+        "ingredient250056e9250056e9CreateAuthChallenge": {
+          "deploymentBucketName": "amplify-ingredient-dev-170401-deployment",
+          "s3Key": "amplify-builds/ingredient250056e9250056e9CreateAuthChallenge-5370744c75514b504871-build.zip"
+        },
         "ingredient250056e9250056e9VerifyAuthChallengeResponse": {
-          "RECAPTCHASECRET": "6Ld75KQaAAAAAMTEJALrg1CvLIpQwnYq_Ok_z_Gj"
+          "RECAPTCHASECRET": "6Ld75KQaAAAAAMTEJALrg1CvLIpQwnYq_Ok_z_Gj",
+          "deploymentBucketName": "amplify-ingredient-dev-170401-deployment",
+          "s3Key": "amplify-builds/ingredient250056e9250056e9VerifyAuthChallengeResponse-5a2f2f79343959486164-build.zip"
+        }
+      },
+      "video": {
+        "ingredientvod": {
+          "s3UUID": "kqw9dl58"
         }
       }
     }

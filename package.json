@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
+    "amplify-category-video": "^3.5.0",
     "aws-amplify": "^3.3.26",
     "aws-amplify-react": "^4.2.30",
     "aws-appsync": "^4.0.3",
@@ -23,6 +24,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "sass": "^1.32.11",
+    "video.js": "^7.11.8",
     "web-vitals": "^1.1.1"
   },
   "scripts": {

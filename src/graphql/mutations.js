@@ -93,7 +93,6 @@ export const createRecipie = /* GraphQL */ `
       associated {
         nextToken
       }
-      isPrivate
       createdAt
       updatedAt
       user
@@ -118,7 +117,6 @@ export const createComment = /* GraphQL */ `
         description
         likes
         dislikes
-        isPrivate
         createdAt
         updatedAt
         user
@@ -159,7 +157,6 @@ export const updateComment = /* GraphQL */ `
         description
         likes
         dislikes
-        isPrivate
         createdAt
         updatedAt
         user
@@ -200,7 +197,6 @@ export const deleteComment = /* GraphQL */ `
         description
         likes
         dislikes
-        isPrivate
         createdAt
         updatedAt
         user
@@ -251,7 +247,6 @@ export const createRecipieLink = /* GraphQL */ `
         description
         likes
         dislikes
-        isPrivate
         createdAt
         updatedAt
         user
@@ -290,7 +285,6 @@ export const updateRecipieLink = /* GraphQL */ `
         description
         likes
         dislikes
-        isPrivate
         createdAt
         updatedAt
         user
@@ -298,6 +292,108 @@ export const updateRecipieLink = /* GraphQL */ `
       recipieLinkRecipieId
       createdAt
       updatedAt
+    }
+  }
+`;
+export const createVodAsset = /* GraphQL */ `
+  mutation CreateVodAsset(
+    $input: CreateVodAssetInput!
+    $condition: ModelvodAssetConditionInput
+  ) {
+    createVodAsset(input: $input, condition: $condition) {
+      id
+      title
+      description
+      video {
+        id
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const updateVodAsset = /* GraphQL */ `
+  mutation UpdateVodAsset(
+    $input: UpdateVodAssetInput!
+    $condition: ModelvodAssetConditionInput
+  ) {
+    updateVodAsset(input: $input, condition: $condition) {
+      id
+      title
+      description
+      video {
+        id
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const deleteVodAsset = /* GraphQL */ `
+  mutation DeleteVodAsset(
+    $input: DeleteVodAssetInput!
+    $condition: ModelvodAssetConditionInput
+  ) {
+    deleteVodAsset(input: $input, condition: $condition) {
+      id
+      title
+      description
+      video {
+        id
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const createVideoObject = /* GraphQL */ `
+  mutation CreateVideoObject(
+    $input: CreateVideoObjectInput!
+    $condition: ModelvideoObjectConditionInput
+  ) {
+    createVideoObject(input: $input, condition: $condition) {
+      id
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const updateVideoObject = /* GraphQL */ `
+  mutation UpdateVideoObject(
+    $input: UpdateVideoObjectInput!
+    $condition: ModelvideoObjectConditionInput
+  ) {
+    updateVideoObject(input: $input, condition: $condition) {
+      id
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const deleteVideoObject = /* GraphQL */ `
+  mutation DeleteVideoObject(
+    $input: DeleteVideoObjectInput!
+    $condition: ModelvideoObjectConditionInput
+  ) {
+    deleteVideoObject(input: $input, condition: $condition) {
+      id
+      createdAt
+      updatedAt
+      owner
     }
   }
 `;

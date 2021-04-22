@@ -8,6 +8,7 @@ import MultipleValueTextInput from 'react-multivalue-text-input';
 
 import Storage from "@aws-amplify/storage";
 import awsmobile from '../aws-exports'
+import awsVideoConfig from '../aws-video-exports'
 
 const AddNewRecipe = observer(class AddNewRecipe extends React.Component {
 
@@ -23,8 +24,8 @@ const AddNewRecipe = observer(class AddNewRecipe extends React.Component {
       recipeCuisines: [],
       recipeFileName: "",
       recipeFile: "",
-      response: "",
-      isPrivate: true
+      response: ""
+      // isPrivate: true
     }
     this.onRecipeNameChange = this.onRecipeNameChange.bind(this);
     this.onRecipeCuisineChange = this.onRecipeCuisineChange.bind(this);
@@ -77,28 +78,28 @@ const AddNewRecipe = observer(class AddNewRecipe extends React.Component {
         this.state.recipeGivenName
       )
       this.setState({ response: `Uploading Recipe, Please wait...` });
-      var level = "private";
-      var message = "Success!"
-      if (this.state.isPrivate) {
-        level = "private";
-        message = "Recipe Saved!"
-      }
-      else {
-        level = "protected"
-        message = "Recipe Shared"
-      }
+      var level = "public";
+      var message = "Recipe Shared"
+      // if (this.state.isPrivate) {
+      //   level = "private";
+      //   message = "Recipe Saved!"
+      // }
+      // else {
+      //   level = "protected"
+      //   message = "Recipe Shared"
+      // }
       Storage.configure({ 
-        bucket: awsmobile.aws_s3_bucket_name,
+        bucket: awsVideoConfig.awsInputVideo,
         level: level,
         region: awsmobile.aws_appsync_region,  
         identityPoolId: awsmobile.aws_cognito_identity_pool_id
      });
-      Storage.list(`userRecipes/`, { level: "private" }).then(result => {
-        console.log("Private List resilt for given media view type", result)
-      })
-      Storage.list(`userRecipes/`, { level: "protected" }).then(result => {
-        console.log("Protected List resilt for given media view type", result)
-      })
+      // Storage.list(`userRecipes/`, { level: "private" }).then(result => {
+      //   console.log("Private List resilt for given media view type", result)
+      // })
+      // Storage.list(`userRecipes/`, { level: "protected" }).then(result => {
+      //   console.log("Protected List resilt for given media view type", result)
+      // })
       if (this.upload.files[0] !== undefined) {
         console.log("File name: '", this.upload.files[0].name, "'")
         Storage.put(`userRecipes/${this.upload.files[0].name}`,
@@ -121,18 +122,18 @@ const AddNewRecipe = observer(class AddNewRecipe extends React.Component {
     }
   }
 
-  toggleChange = event => {
-    if (event.target.checked) {
-      this.setState({
-        isPrivate: true
-      });
-    }
-    else {
-      this.setState({
-        isPrivate: false
-      });
-    }
-  }
+  // toggleChange = event => {
+  //   if (event.target.checked) {
+  //     this.setState({
+  //       isPrivate: true
+  //     });
+  //   }
+  //   else {
+  //     this.setState({
+  //       isPrivate: false
+  //     });
+  //   }
+  // }
 
   render() {
     // const { username, email } = UserStore
@@ -229,12 +230,12 @@ const AddNewRecipe = observer(class AddNewRecipe extends React.Component {
 
         {!!this.state.response && <div>{this.state.response}</div>}
 
-        <p >Secret Recipe:
+        {/* <p >Secret Recipe:
             <input type="checkbox"
             defaultChecked={true}
             id="recipe_make_protected"
             onChange={this.toggleChange} />
-        </p>
+        </p> */}
         <div {...css(styles.createButton)}>
           <p {...css(styles.buttonText)} onClick={this.createRecipe}>Create</p>
         </div>
