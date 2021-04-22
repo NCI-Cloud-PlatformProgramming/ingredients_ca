@@ -3,22 +3,28 @@ import React from 'react'
 import { css } from 'glamor'
 import { observer } from 'mobx-react'
 
-import UserStore from '../mobx/UserStore'
 import { primary } from '../theme'
 import MultipleValueTextInput from 'react-multivalue-text-input';
+
+import Storage from "@aws-amplify/storage";
+import { SetS3Config } from "../aws-exports";
+import awsmobile from '../aws-exports'
 
 const AddNewRecipe = observer(class AddNewRecipe extends React.Component {
 
   constructor() {
     super();
     this.state = {
-      recipeName: '',
+      recipeGivenName: '',
       recipeDescription: '',
       selectedRecipeCuisine: '',
       showOptions: false,
       ingredients: [],
       possibleAllergens: [],
       recipeCuisines: [],
+      recipeFileName: "",
+      recipeFile: "",
+      response: "",
       isPrivate: true
     }
     this.onRecipeNameChange = this.onRecipeNameChange.bind(this);
@@ -41,7 +47,7 @@ const AddNewRecipe = observer(class AddNewRecipe extends React.Component {
 
   onRecipeNameChange = event => {
     this.setState({
-      recipeName: event.target.value
+      recipeGivenName: event.target.value
     })
   }
 
@@ -60,51 +66,87 @@ const AddNewRecipe = observer(class AddNewRecipe extends React.Component {
     });
   }
 
-  toggleChange = event => {
-    if (event.target.checked) {
-      this.setState({
-        isPrivate: false
-      });
-    }
-    else {
-      this.setState({
-        isPrivate: true
-      });
-    }
-  }
+
 
   createRecipe = async () => {
     try {
       console.log(
         this.state.ingredients,
-        this.state.isPrivate,
         this.state.possibleAllergens,
         this.state.recipeDescription,
         this.state.selectedRecipeCuisine,
-        this.state.recipeName
-        )
+        this.state.recipeGivenName
+      )
+      this.setState({ response: `Uploading Recipe, Please wait...` });
+      var level = "private";
+      var message = "Success!"
+      if (this.state.isPrivate) {
+        level = "private";
+        message = "Recipe Saved!"
+      }
+      else {
+        level = "protected"
+        message = "Recipe Shared"
+      }
+      SetS3Config(awsmobile.aws_s3_bucket_name, level);
+      Storage.list(`userRecipes/`, { level: "private" }).then(result => {
+        console.log("Private List resilt for given media view type", result)
+      })
+      Storage.list(`userRecipes/`, { level: "protected" }).then(result => {
+        console.log("Protected List resilt for given media view type", result)
+      })
+      if (this.upload.files[0] !== undefined) {
+        console.log("File name: '", this.upload.files[0].name, "'")
+        Storage.put(`userRecipes/${this.upload.files[0].name}`,
+          this.upload.files[0],
+          { contentType: this.upload.files[0].type })
+          .then(result => {
+            console.log(result)
+            this.upload = null;
+            this.setState({ response: message });
+          })
+          .catch(err => {
+            this.setState({ response: `Cannot uploading Recipe: ${err}` });
+          });
+      }
+      else {
+        this.setState({ response: `Browse Video before upload` });
+      }
     } catch (err) {
       console.log('Error creating new recipe', err)
     }
   }
 
+  toggleChange = event => {
+    if (event.target.checked) {
+      this.setState({
+        isPrivate: true
+      });
+    }
+    else {
+      this.setState({
+        isPrivate: false
+      });
+    }
+  }
+
   render() {
-    const { username, email } = UserStore
+    // const { username, email } = UserStore
     return (
       <div {...css(styles.container)}>
         <p {...css(styles.title)}>Add New Recipe</p>
         <table name="recipe_creation_form" width="100%">
           <tr {...css(styles.recipeEntry)}>
             <td {...css(styles.recipeKey)}>Name: </td>
-            <td {...css(styles.recipeValue)}><input type="text" id="recipe_name" 
-            {...css(styles.valueField)}
-            onChange={this.onRecipeNameChange}></input></td>
+            <td {...css(styles.recipeValue)}><input type="text" id="recipe_name"
+              {...css(styles.valueField)}
+              onChange={this.onRecipeNameChange}></input></td>
           </tr>
           <tr {...css(styles.recipeEntry)}>
             <td {...css(styles.recipeKey)}>Description: </td>
-            <td {...css(styles.recipeValue)}><textarea id="recipe_description" 
-            {...css(styles.valueField)}
-            onChange={this.onRecipeDescriptionChange}></textarea></td>
+            <td {...css(styles.recipeValue)}><textarea id="recipe_description"
+              {...css(styles.valueField)}
+              onChange={this.onRecipeDescriptionChange}></textarea></td>
           </tr>
           <tr {...css(styles.recipeEntry)}>
             <td {...css(styles.recipeKey)}>Cuisine: </td>
@@ -135,7 +177,7 @@ const AddNewRecipe = observer(class AddNewRecipe extends React.Component {
                   })
                 }
                 name="recipe_ingredients"
-                placeholder="Enter whatever items you want; separate them with COMMA or ENTER."
+                placeholder="Enter ingredients; separate them with COMMA or ENTER."
               /> </td>
           </tr>
           <tr {...css(styles.recipeEntry)}>
@@ -153,21 +195,43 @@ const AddNewRecipe = observer(class AddNewRecipe extends React.Component {
                   })
                 }
                 name="recipe_allergens"
-                placeholder="Enter whatever items you want; separate them with COMMA or ENTER."
+                placeholder="Enter possible allergens; separate them with COMMA or ENTER."
               /> </td>
           </tr>
-          <tr {...css(styles.recipeEntry)}>
-            <td {...css(styles.recipeKey)}>Make Public: </td>
-            <td >
-              <input type="checkbox"
-                defaultChecked={false}
-                id="recipe_make_public"
-                onChange={this.toggleChange}
-              />
-            </td>
-          </tr>
         </table>
-        <div {...css(styles.button)}>
+        <p {...css(styles.title)}>Upload Recipe Video</p>
+        <input
+          type="file"
+          accept="video/mp4,video/x-m4v,video/*"
+          style={{ display: "none" }}
+          ref={ref => (this.upload = ref)}
+          onChange={e =>
+            this.setState({
+              recipeFile: this.upload.files[0],
+              recipeFileName: this.upload.files[0].name
+            })
+          }
+        />
+        <input value={this.state.recipeFileName} placeholder="Select file" />
+        <button {...css(styles.button)}
+          onClick={e => {
+            this.upload.value = null;
+            this.upload.click();
+          }}
+          loading={this.state.uploading}
+        >
+          Browse
+        </button>
+
+        {!!this.state.response && <div>{this.state.response}</div>}
+
+        <p >Secret Recipe:
+            <input type="checkbox"
+            defaultChecked={true}
+            id="recipe_make_protected"
+            onChange={this.toggleChange} />
+        </p>
+        <div {...css(styles.createButton)}>
           <p {...css(styles.buttonText)} onClick={this.createRecipe}>Create</p>
         </div>
       </div>
@@ -177,7 +241,18 @@ const AddNewRecipe = observer(class AddNewRecipe extends React.Component {
 
 const styles = {
   button: {
-    margin: '100px 0px 0px',
+    margin: '10px 10px 0px',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ededed',
+    cursor: 'pointer'
+  },
+  createButton: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
     height: 50,
     display: 'flex',
     justifyContent: 'center',
