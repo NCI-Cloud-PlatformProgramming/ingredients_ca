@@ -7,7 +7,6 @@ import { primary } from '../theme'
 import MultipleValueTextInput from 'react-multivalue-text-input';
 
 import Storage from "@aws-amplify/storage";
-import { SetS3Config } from "../aws-exports";
 import awsmobile from '../aws-exports'
 
 const AddNewRecipe = observer(class AddNewRecipe extends React.Component {
@@ -88,7 +87,12 @@ const AddNewRecipe = observer(class AddNewRecipe extends React.Component {
         level = "protected"
         message = "Recipe Shared"
       }
-      SetS3Config(awsmobile.aws_s3_bucket_name, level);
+      Storage.configure({ 
+        bucket: awsmobile.aws_s3_bucket_name,
+        level: level,
+        region: awsmobile.aws_appsync_region,  
+        identityPoolId: awsmobile.aws_cognito_identity_pool_id
+     });
       Storage.list(`userRecipes/`, { level: "private" }).then(result => {
         console.log("Private List resilt for given media view type", result)
       })
