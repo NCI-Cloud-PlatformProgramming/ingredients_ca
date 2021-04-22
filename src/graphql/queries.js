@@ -53,7 +53,6 @@ export const getRecipie = /* GraphQL */ `
       ingredients
       possibleAllergens
       description
-      mediaUrl
       likes
       dislikes
       comments {
@@ -83,7 +82,6 @@ export const listRecipies = /* GraphQL */ `
         ingredients
         possibleAllergens
         description
-        mediaUrl
         likes
         dislikes
         isPrivate
@@ -108,7 +106,6 @@ export const getComment = /* GraphQL */ `
         ingredients
         possibleAllergens
         description
-        mediaUrl
         likes
         dislikes
         isPrivate
