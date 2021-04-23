@@ -13,7 +13,8 @@
     },
     "categories": {
       "auth": {
-        "ingredient7e664d71": {}
+        "ingredient7e664d71": {},
+        "userPoolGroups": {}
       },
       "function": {
         "ingredient250056e9250056e9DefineAuthChallenge": {

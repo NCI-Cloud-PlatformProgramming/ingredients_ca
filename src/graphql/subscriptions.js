@@ -24,6 +24,7 @@ export const onCreateRecipieLink = /* GraphQL */ `
         ingredients
         possibleAllergens
         description
+        mediaUrl
         likes
         dislikes
         createdAt
@@ -49,6 +50,7 @@ export const onCreateComment = /* GraphQL */ `
         ingredients
         possibleAllergens
         description
+        mediaUrl
         likes
         dislikes
         createdAt

@@ -14,8 +14,6 @@ class User {
     } catch (err) {
       console.log('error getting user data... ', err)
     }
-    console.log('username:', this.username)
-    console.log('email:', this.email)
     // check if user exists in db, if not then create user
     if (this.username !== '') {
       this.checkIfUserExists(this.email)
@@ -24,20 +22,13 @@ class User {
 
   async checkIfUserExists(email) {
     try {
-      console.log("Checking user details with id: ", email);
       var user = await API.graphql(graphqlOperation(GetUserByEmail, {email}))
       var getUser = user.data.listUsers.items[0]
-      console.log("User Data: ", user)
       if (!getUser) {
-        console.log("Creating user")
         this.createUser()
         user = await API.graphql(graphqlOperation(GetUserByEmail, {email}))
         getUser = user.data
-        console.log("Created User Data: ", user.data)
-      } else {
-        console.log("Got user details: ", getUser)
-        console.log('me:', getUser)
-      }
+      } 
     } catch (err) {
       console.log('error fetching user: ', err)
     }

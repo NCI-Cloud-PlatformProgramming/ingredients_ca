@@ -20,7 +20,6 @@ const ProfileWithData = observer(class Profile extends React.Component {
     return (
       <div {...css(styles.container)}>
         <p {...css(styles.title)}>Profile</p>
-        <p>Username: <b>{username}</b></p>
         <p>Email: <b>{email}</b></p>
         <div {...css(styles.button)}>
           <p {...css(styles.buttonText)} onClick={this.signOut}>Sign Out</p>

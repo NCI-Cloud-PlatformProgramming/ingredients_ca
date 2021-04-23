@@ -26,6 +26,7 @@ type Recipie
   ingredients: [String!]!
   possibleAllergens: [String!]!
   description: String!
+  mediaUrl: String!
   likes: Int
   dislikes: Int
   comments: [Comment] @connection(name: "RecipieComments", sortField: "createdAt")

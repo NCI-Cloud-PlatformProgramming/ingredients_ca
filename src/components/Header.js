@@ -15,12 +15,12 @@ class Header extends React.Component {
         >
           <p {...css(styles.buttonText)}>Wall</p>
         </Link>
-        {/* <Link
-          to='/users'
+        <Link
+          to='/wall/addNewRecipie'
           {...css(styles.button)}
         >
-          <p {...css(styles.buttonText)}>Users</p>
-        </Link> */}
+          <p {...css(styles.buttonText)}>Add Recipe</p>
+        </Link>
         <Link
           to='/profile'
           {...css(styles.button)}

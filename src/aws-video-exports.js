@@ -2,7 +2,7 @@
 
 const awsvideoconfig = {
     "awsInputVideo": "ingredientvod-dev-input-kqw9dl58",
-    "awsOutputVideo": "ingredientvod-dev-output-kqw9dl58.s3.amazonaws.com"
+    "awsOutputVideo": "ingredientvod-dev-output-kqw9dl58.s3.us-east-1.amazonaws.com"
 };
 
 export default awsvideoconfig;

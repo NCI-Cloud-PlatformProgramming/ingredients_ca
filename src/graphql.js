@@ -16,6 +16,21 @@ const createUser = `
   }
 `
 
+const createRecipie = `
+  mutation($name: String!, $cuisine: String!, $ingredients: [String!]!, $possibleAllergens: [String!]!, $description: String!, $mediaUrl: String!){
+    createRecipie(input:{
+      name: $name
+      cuisine: $cuisine
+      ingredients: $ingredients
+      possibleAllergens: $possibleAllergens
+      description: $description
+      mediaUrl: $mediaUrl
+    }){
+      id
+    }
+  }
+`
+
 // const createMessage = gql`mutation CreateMessage(
 //     $createdAt: String, $id: ID, $authorId: String, $content: String!, $messageConversationId: ID!
 //   ) {
@@ -135,6 +150,49 @@ const listUsers = graphql`
   }
 `
 
+const listRecipies = graphql`
+  query listRecipies{
+    listRecipies {
+    items {
+      cuisine
+      description
+      dislikes
+      likes
+      ingredients
+      mediaUrl
+      name
+      possibleAllergens
+      user
+    }
+  }
+  }
+`
+
+const filterRecipieByName = graphql`
+query listRecipies ($searchKeyword: String!){
+  listRecipies(
+    limit: 15
+    filter: {
+      name: {
+      contains: $searchKeyword
+      }
+    }
+  ) {
+    items {
+      cuisine
+      description
+      dislikes
+      likes
+      ingredients
+      mediaUrl
+      name
+      possibleAllergens
+      user
+    }
+  }
+}
+`
+
 // const onCreateMessage = gql`
 //   subscription onCreateMessage($messageConversationId: ID!) {
 //     onCreateMessage(messageConversationId: $messageConversationId) {
@@ -159,14 +217,16 @@ const onCreateUser = gql`subscription OnCreateUser {
 
 export {
   createUser,
-//   createMessage,
-//   createConvo,
-//   createConvoLink,
-//   getConvo,
+  createRecipie,
+  //   createMessage,
+  //   createConvoLink,
+  //   getConvo,
   getUser,
   getUserByEmail,
-//   getUserAndConversations,
+  //   getUserAndConversations,
   listUsers,
-//   onCreateMessage,
+  listRecipies,
+  filterRecipieByName,
+  //   onCreateMessage,
   onCreateUser
 }

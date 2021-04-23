@@ -10,10 +10,15 @@ import Storage from "@aws-amplify/storage";
 import awsmobile from '../aws-exports'
 import awsVideoConfig from '../aws-video-exports'
 
+import UserStore from '../mobx/UserStore'
+import { API, graphqlOperation } from 'aws-amplify'
+import { createRecipie } from '../graphql'
+
 const AddNewRecipe = observer(class AddNewRecipe extends React.Component {
 
   constructor() {
     super();
+    this.userName = ''
     this.state = {
       recipeGivenName: '',
       recipeDescription: '',
@@ -24,7 +29,8 @@ const AddNewRecipe = observer(class AddNewRecipe extends React.Component {
       recipeCuisines: [],
       recipeFileName: "",
       recipeFile: "",
-      response: ""
+      response: "",
+      mediaUrl: "https://ingredientvod-dev-output-kqw9dl58.s3.us-east-1.amazonaws.com/public/userRecipes/b068050e-5410-4bff-b6b5-55f520668904/ScrambledEggs/ScrambledEggs.m3u8"
       // isPrivate: true
     }
     this.onRecipeNameChange = this.onRecipeNameChange.bind(this);
@@ -66,6 +72,21 @@ const AddNewRecipe = observer(class AddNewRecipe extends React.Component {
     });
   }
 
+  mutateRecipe = function () {
+    try {
+      API.graphql(graphqlOperation(createRecipie,
+        {
+          name: this.state.recipeGivenName,
+          cuisine: this.state.selectedRecipeCuisine,
+          ingredients: this.state.ingredients,
+          possibleAllergens: this.state.possibleAllergens,
+          description: this.state.recipeDescription,
+          mediaUrl: this.state.mediaUrl
+        }))
+    } catch (err) {
+      console.log('Error creating user! :', err)
+    }
+  }
 
 
   createRecipe = async () => {
@@ -88,34 +109,51 @@ const AddNewRecipe = observer(class AddNewRecipe extends React.Component {
       //   level = "protected"
       //   message = "Recipe Shared"
       // }
-      Storage.configure({ 
+      Storage.configure({
         bucket: awsVideoConfig.awsInputVideo,
         level: level,
-        region: awsmobile.aws_appsync_region,  
+        region: awsmobile.aws_appsync_region,
         identityPoolId: awsmobile.aws_cognito_identity_pool_id
-     });
+      });
       // Storage.list(`userRecipes/`, { level: "private" }).then(result => {
       //   console.log("Private List resilt for given media view type", result)
       // })
       // Storage.list(`userRecipes/`, { level: "protected" }).then(result => {
       //   console.log("Protected List resilt for given media view type", result)
       // })
-      if (this.upload.files[0] !== undefined) {
-        console.log("File name: '", this.upload.files[0].name, "'")
-        Storage.put(`userRecipes/${this.upload.files[0].name}`,
-          this.upload.files[0],
-          { contentType: this.upload.files[0].type })
-          .then(result => {
-            console.log(result)
-            this.upload = null;
-            this.setState({ response: message });
-          })
-          .catch(err => {
-            this.setState({ response: `Cannot uploading Recipe: ${err}` });
-          });
+
+      //Sample URL pattern
+      //'https://ingredientvod-dev-output-kqw9dl58.s3.amazonaws.com/public/userRecipes/VID_20210422_192106/VID_20210422_192106.m3u8'
+
+      if (this.state.recipeFileName !== '' && this.state.recipeGivenName.trim() !== '') {
+
+        alert("Alert! Maximum S3 Put, Copy, Post or List requests reached for allotted credit/ freetier. The application will use a predefined sample video and resume uploading user uploaded videos after May 01 2021")
+        this.setState({
+          response: message
+        });
+        this.mutateRecipe();
+
+        //Commenting this S3 put funciton as Maximum S3 Put, Copy, Post or List requests reached for allotted credit/ freetier.
+        //The application will use a predefined sample video and resume uploading user uploaded videos after May 01 2021
+        // Storage.put(`userRecipes/${this.userName}/${this.state.recipeFileName}`,
+        //   this.state.recipeFile,
+        //   { contentType: this.state.recipeFile.type })
+        //   .then(result => {
+        //     this.upload = null;
+        //     var extension = ".".concat(this.state.recipeFile.type.replace("video/", ""))
+        //     this.setState({
+        //       response: message,
+        //       mediaUrl: `https://${awsVideoConfig.awsOutputVideo}/public/userRecipes/${this.userName}/${this.state.recipeFileName.replace(extension, "")}/${this.state.recipeFileName.replace(extension, "")}.m3u8`
+        //     });
+        //     this.mutateRecipe();
+        //   })
+        //   .catch(err => {
+        //     this.setState({ response: `Cannot uploading Recipe: ${err}` });
+        //   });
+
       }
       else {
-        this.setState({ response: `Browse Video before upload` });
+        this.setState({ response: `Neither Name nor Upload Field should be empty!` });
       }
     } catch (err) {
       console.log('Error creating new recipe', err)
@@ -136,7 +174,8 @@ const AddNewRecipe = observer(class AddNewRecipe extends React.Component {
   // }
 
   render() {
-    // const { username, email } = UserStore
+    const { username, email } = UserStore
+    this.userName = username;
     return (
       <div {...css(styles.container)}>
         <p {...css(styles.title)}>Add New Recipe</p>

@@ -85,6 +85,7 @@ export const createRecipie = /* GraphQL */ `
       ingredients
       possibleAllergens
       description
+      mediaUrl
       likes
       dislikes
       comments {
@@ -115,6 +116,7 @@ export const createComment = /* GraphQL */ `
         ingredients
         possibleAllergens
         description
+        mediaUrl
         likes
         dislikes
         createdAt
@@ -155,6 +157,7 @@ export const updateComment = /* GraphQL */ `
         ingredients
         possibleAllergens
         description
+        mediaUrl
         likes
         dislikes
         createdAt
@@ -195,6 +198,7 @@ export const deleteComment = /* GraphQL */ `
         ingredients
         possibleAllergens
         description
+        mediaUrl
         likes
         dislikes
         createdAt
@@ -245,6 +249,7 @@ export const createRecipieLink = /* GraphQL */ `
         ingredients
         possibleAllergens
         description
+        mediaUrl
         likes
         dislikes
         createdAt
@@ -283,6 +288,7 @@ export const updateRecipieLink = /* GraphQL */ `
         ingredients
         possibleAllergens
         description
+        mediaUrl
         likes
         dislikes
         createdAt
