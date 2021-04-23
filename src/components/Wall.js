@@ -95,7 +95,7 @@ class Wall extends React.Component {
         </div>
         <div {...css(styles.wall, styles.tableBorder)}>
           {this.state.filteredRecipeList.data.listRecipies.items.map(result =>
-            <div>
+            <div {...css(styles.separateVideoContainer)}>
               <p {...css(styles.videoInformation)}>
                 <strong {...css(styles.title)} >{result.name}: </strong>
               </p>
@@ -103,32 +103,32 @@ class Wall extends React.Component {
               <VideoCards {...videoOptions.sources[0] = { src: result.mediaUrl.replace("us-east-1.", "") }} />
               {result.cuisine !== "" ? <p {...css(styles.videoInformation)} > <strong {...css(styles.subTitle)} >Cuisine: </strong> {result.cuisine} </p> : <u></u>}
               {((result.ingredients.length != 0) || (result.possibleAllergens.length != 0)) ?
-              <table {...css(styles.videoInformation, styles.tableBorder)} >
-                <thead >
-                  {result.ingredients.length != 0 ? <th {...css(styles.ingredientsTableHeaderData, styles.tableBorder)} >Ingredients</th> : <u></u>}
-                  {result.possibleAllergens.length != 0 ? <th {...css(styles.ingredientsTableHeaderData, styles.tableBorder)}>Possible Allergens</th> : <u></u>}
-                </thead>
-                <tbody {...css(styles.tableBorder)}>
-                  <tr{...css(styles.tableBorder)}>
-                  {result.ingredients.length != 0 ?
-                    <td{...css(styles.tableBorder, styles.ingredientsTableData)}>
-                      <ul {...css(styles.ulWithoutBullets)}>
-                        {result.ingredients.map(ingredients =>
-                          <li> {ingredients} </li>
-                        )}
-                      </ul>
-                    </td> : <u></u>}
-                    {result.possibleAllergens.length != 0 ?
-                    <td{...css(styles.tableBorder, styles.ingredientsTableData)}>
-                      <ul {...css(styles.ulWithoutBullets)}>
-                        {result.possibleAllergens.map(possibleAllergens =>
-                          <li> {possibleAllergens} </li>
-                        )}
-                      </ul>
-                    </td> : <u></u>}
-                  </tr>
-                </tbody>
-              </table> : <u></u>}
+                <table {...css(styles.videoInformation, styles.tableBorder)} >
+                  <thead >
+                    {result.ingredients.length != 0 ? <th {...css(styles.ingredientsTableHeaderData, styles.tableBorder)} >Ingredients</th> : <u></u>}
+                    {result.possibleAllergens.length != 0 ? <th {...css(styles.ingredientsTableHeaderData, styles.tableBorder)}>Possible Allergens</th> : <u></u>}
+                  </thead>
+                  <tbody {...css(styles.tableBorder)}>
+                    <tr{...css(styles.tableBorder)}>
+                      {result.ingredients.length != 0 ?
+                        <td{...css(styles.tableBorder, styles.ingredientsTableData)}>
+                          <ul {...css(styles.ulWithoutBullets)}>
+                            {result.ingredients.map(ingredients =>
+                              <li> {ingredients} </li>
+                            )}
+                          </ul>
+                        </td> : <u></u>}
+                      {result.possibleAllergens.length != 0 ?
+                        <td {...css(styles.tableBorder, styles.ingredientsTableData)}>
+                          <ul {...css(styles.ulWithoutBullets)}>
+                            {result.possibleAllergens.map(possibleAllergens =>
+                              <li> {possibleAllergens} </li>
+                            )}
+                          </ul>
+                        </td> : <u></u>}
+                    </tr>
+                  </tbody>
+                </table> : <u></u>}
             </div>
           )}
         </div>
@@ -219,6 +219,10 @@ const styles = {
   },
   tableBorder: {
     border: `1px solid ${primary}`
+  },
+  separateVideoContainer: {
+    borderBottom: `2px solid ${primary}`,
+    paddingBottom: 4
   }
 }
 

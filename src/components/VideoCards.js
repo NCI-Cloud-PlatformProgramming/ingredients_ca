@@ -39,12 +39,15 @@ class VideoCards extends React.Component {
 const styles = {
     videosContainer: {
         positoin: 'absolute',
-        top: 200
+        top: 200,
+        'align-items': 'center',
+        display: 'flex',
+        'justify-content': 'center'
     },
     video: {
         position: 'relative',
         margin: '10px 10px 10px',
-        width: 'auto'
+        width: '85%'
     }
 }
 

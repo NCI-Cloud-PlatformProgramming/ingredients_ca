@@ -19,7 +19,11 @@ type Recipie
     queries: {get: "getRecipie", list: "listRecipies"}
     subscriptions: null
   )
-  @auth(rules: [{ allow: owner, ownerField: "user" }]) {
+  @auth(
+    rules: [
+    { allow: owner, ownerField: "user", operations: [create, update, delete]},
+    { allow: private, operations: [read] }])
+    {
   id: ID!
   name: String!
   cuisine: String!
