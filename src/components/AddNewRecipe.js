@@ -84,7 +84,7 @@ const AddNewRecipe = observer(class AddNewRecipe extends React.Component {
           mediaUrl: this.state.mediaUrl
         }))
     } catch (err) {
-      console.log('Error creating user! :', err)
+      console.log('Error creating new user! :', err)
     }
   }
 
