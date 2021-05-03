@@ -127,7 +127,7 @@ const AddNewRecipe = observer(class AddNewRecipe extends React.Component {
 
       if (this.state.recipeFileName !== '' && this.state.recipeGivenName.trim() !== '') {
 
-        alert("Alert! Maximum S3 Put, Copy, Post or List requests reached for allotted credit/ freetier. The application will use a predefined sample video and resume uploading user uploaded videos after May 01 2021")
+        //alert("Alert! Maximum S3 Put, Copy, Post or List requests reached for allotted credit/ freetier. The application will use a predefined sample video and resume uploading user uploaded videos after May 01 2021")
         this.setState({
           response: message
         });
