@@ -30,7 +30,7 @@ const AddNewRecipe = observer(class AddNewRecipe extends React.Component {
       recipeFileName: "",
       recipeFile: "",
       response: "",
-      mediaUrl: "https://ingredientvod-dev-output-kqw9dl58.s3.us-east-1.amazonaws.com/public/userRecipes/b068050e-5410-4bff-b6b5-55f520668904/ScrambledEggs/ScrambledEggs.m3u8"
+      mediaUrl: ""
       // isPrivate: true
     }
     this.onRecipeNameChange = this.onRecipeNameChange.bind(this);
@@ -133,23 +133,22 @@ const AddNewRecipe = observer(class AddNewRecipe extends React.Component {
         });
         this.mutateRecipe();
 
-        //Commenting this S3 put funciton as Maximum S3 Put, Copy, Post or List requests reached for allotted credit/ freetier.
-        //The application will use a predefined sample video and resume uploading user uploaded videos after May 01 2021
-        // Storage.put(`userRecipes/${this.userName}/${this.state.recipeFileName}`,
-        //   this.state.recipeFile,
-        //   { contentType: this.state.recipeFile.type })
-        //   .then(result => {
-        //     this.upload = null;
-        //     var extension = ".".concat(this.state.recipeFile.type.replace("video/", ""))
-        //     this.setState({
-        //       response: message,
-        //       mediaUrl: `https://${awsVideoConfig.awsOutputVideo}/public/userRecipes/${this.userName}/${this.state.recipeFileName.replace(extension, "")}/${this.state.recipeFileName.replace(extension, "")}.m3u8`
-        //     });
-        //     this.mutateRecipe();
-        //   })
-        //   .catch(err => {
-        //     this.setState({ response: `Cannot uploading Recipe: ${err}` });
-        //   });
+        //Un-Commenting this S3 put funciton as Maximum S3 Put, Copy, Post or List requests reset for allotted credit/ freetier.
+        Storage.put(`userRecipes/${this.userName}/${this.state.recipeFileName}`,
+          this.state.recipeFile,
+          { contentType: this.state.recipeFile.type })
+          .then(result => {
+            this.upload = null;
+            var extension = ".".concat(this.state.recipeFile.type.replace("video/", ""))
+            this.setState({
+              response: message,
+              mediaUrl: `https://${awsVideoConfig.awsOutputVideo}/public/userRecipes/${this.userName}/${this.state.recipeFileName.replace(extension, "")}/${this.state.recipeFileName.replace(extension, "")}.m3u8`
+            });
+            this.mutateRecipe();
+          })
+          .catch(err => {
+            this.setState({ response: `Cannot uploading Recipe: ${err}` });
+          });
 
       }
       else {
